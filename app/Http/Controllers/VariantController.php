@@ -65,4 +65,12 @@ class VariantController extends Controller
         ],203);
     }
 
+    public function getAllColors(){
+        $colors = Variant::select('color')->distinct()->pluck('color');
+
+        return response()->json([
+            'message' => 'Colors retrieved successfully',
+            'colors' => $colors
+        ], 200);
+    }
 }

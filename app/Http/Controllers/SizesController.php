@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 
 class SizesController extends Controller
 {
+    public function getAllSizes(){
+        $sizes = Size::select('size')->distinct()->pluck('size');
+
+        return response()->json([
+            'message' => 'Sizes retrieved successfully',
+            'sizes' => $sizes
+        ], 200);
+    }
     /**
      * Display a listing of the resource.
      */

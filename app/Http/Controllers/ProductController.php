@@ -4,19 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Variant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Type\Integer;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
+        $perPage = $request->get('per_page', 10);
+        $products = Product::paginate($perPage);
 
         return response()->json([
             'message' => 'Products retrieved successfully',
+            'total_products' => $products->total(), // total count in DB
+            'current_page'   => $products->currentPage(),
+            'products_per_page' => $products->perPage(),
+            'last_page'      => $products->lastPage(),
             'products' => ProductResource::collection($products)
         ], 200);
     }
@@ -80,4 +87,26 @@ class ProductController extends Controller
         ]);
     }
 
+    public function getMaxAndMinPrice(){
+        $max = (int)Product::max('price');
+        $min = (int)Product::min('price');
+
+        return response()->json([
+            'maxPrice' => $max,
+            'minPrice' => $min
+        ], 200);
+    }
+
+    public function getGenders(){
+        $genders = Product::select('sex as name', DB::raw('COUNT(*) as count'))
+                    ->groupBy('sex')
+                    ->orderByRaw("FIELD(sex, 'B', 'G', 'U')")
+                    ->get();
+
+
+        return response()->json([
+            'message' => "genders fetched successfully",
+            "genders" => $genders
+        ], 200);
+    }
 }
