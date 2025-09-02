@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('wilayas', function (Blueprint $table) {
-            $table->integer('id')->primary();
-            $table->string('name');
-            $table->boolean('is_deliverable')->default(true);
+        Schema::create('shipping_prices', function (Blueprint $table) {
+            $table->id();
+            $table->string('wilaya_id');
+            $table->string('commune_id');
+            $table->string('stopDeskTarif');
+            $table->string('homeTarif');
         });
     }
 
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('wilayas');
+        Schema::dropIfExists('shipping_prices');
     }
 };

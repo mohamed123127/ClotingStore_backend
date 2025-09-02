@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('wilayas', function (Blueprint $table) {
+        Schema::create('agences', function (Blueprint $table) {
             $table->integer('id')->primary();
             $table->string('name');
-            $table->boolean('is_deliverable')->default(true);
+            $table->string('address')->default(true);
+            $table->string('gps')->default(true);
+            $table->integer('commune_id')->foreignId()->references('id')->on('communes')->onDelete('cascade');
         });
     }
 
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('wilayas');
+        Schema::dropIfExists('agences');
     }
 };

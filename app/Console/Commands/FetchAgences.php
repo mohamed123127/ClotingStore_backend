@@ -2,19 +2,18 @@
 
 namespace App\Console\Commands;
 
-use App\Services\Yalidine\wilayaServices;
 use App\Services\YalidineServices;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
-class FetchWilayas extends Command
+class FetchAgences extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'run:fetch-wilayas';
+    protected $signature = 'run:fetch-agences';
 
     /**
      * The console command description.
@@ -28,13 +27,13 @@ class FetchWilayas extends Command
      */
     public function handle()
     {
-        $result = YalidineServices::fetchWilayasAndStoreInDb();
+        $result = YalidineServices::fetchAgencesAndStoreInDb();
         if($result['status']){
-            $this->info("wilayas updated successfully");
-            Log::info("wilayas updated successfully");
+            $this->info("Agences updated successfully");
+            Log::info("Agences updated successfully");
         }else{
-            $this->warn("Failled to update wilayas");
-            Log::warning("Failled to update wilayas",["message"=>$result['message'],"error message"=>$result['error']]);
+            $this->warn("Failled to update Agences");
+            Log::warning("Failled to update Agences",["message"=>$result['message'],"error message"=>$result['error']]);
         }
     }
 }

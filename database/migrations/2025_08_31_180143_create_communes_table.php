@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('wilayas', function (Blueprint $table) {
+        Schema::create('communes', function (Blueprint $table) {
             $table->integer('id')->primary();
             $table->string('name');
             $table->boolean('is_deliverable')->default(true);
+            $table->boolean('has_stop_desk')->default(true);
+            $table->integer('wilaya_id')->foreignId()->references('id')->on('wilayas')->onDelete('cascade');
         });
     }
 
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('wilayas');
+        Schema::dropIfExists('communes');
     }
 };

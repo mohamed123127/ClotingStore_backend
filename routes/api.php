@@ -6,10 +6,14 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImagesController;
 use App\Http\Controllers\SizesController;
 use App\Http\Controllers\VariantController;
+use App\Http\Controllers\WilayaController;
+use App\Http\Controllers\Yalidine;
+use App\Http\Controllers\YalidineController;
 use App\Models\Categorie;
+use App\Services\Yalidine\wilayaServices;
+use App\Services\YalidineServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 /*Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');*/
@@ -51,3 +55,16 @@ Route::put('variants/{id}', [VariantController::class, 'update']);
 Route::delete('variants/{id}', [VariantController::class, 'destroy']);
 
 Route::apiResource('categories', CategoryController::class);
+
+//All Yalidine Routes
+Route::prefix('yalidine/')->group(function(){
+    Route::get("wilayas",[YalidineController::class,'GetWilayas']);
+    Route::get("communes/{wilaya_id}",[YalidineController::class,'GetCommunes']);
+    Route::get("communes/{wilaya_id}/hasAgence",[YalidineController::class,'GetCommunes_hasAgences']);
+    Route::get("agences/{commune_id}",[YalidineController::class,'GetAgences']);
+});
+
+Route::get('test',function (){
+    $x = YalidineServices::fetchWilayasAndStoreInDb();
+    return $x;
+});
