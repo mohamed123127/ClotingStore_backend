@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('shipping_prices', function (Blueprint $table) {
-            $table->id();
-            $table->string('wilaya_id');
-            $table->string('commune_id');
-            $table->string('stopDeskTarif');
-            $table->string('homeTarif');
+            $table->string('id')->primary();
+            $table->string('minStopDeskTarif');
+            $table->string('maxStopDeskTarif');
+            $table->string('minHomeTarif');
+            $table->string('maxHomeTarif');
+            $table->string('defrence');
         });
     }
 

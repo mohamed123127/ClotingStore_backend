@@ -29,14 +29,14 @@ class fetchShippingPrices extends Command
     public function handle()
     {
         $result = YalidineServices::fetchShippingPrices();
-        $this->info("Testing");
-            Log::warning("Testing",["data"=>$result['data']]);
-        // if($result['status']){
-        //     $this->info("Shipping prices updated successfully");
-        //     Log::info("Shipping prices updated successfully");
-        // }else{
-        //     $this->warn("Failled to update Shipping prices");
-        //     Log::warning("Failled to update Shipping prices",["message"=>$result['message'],"error message"=>$result['error']]);
-        // }
+        // $this->info("Testing");
+        //     Log::warning("Testing",["data"=>$result]);
+        if($result['status']){
+            $this->info("Shipping prices updated successfully");
+            Log::info("Shipping prices updated successfully");
+        }else{
+            $this->warn("Failled to update Shipping prices");
+            Log::warning("Failled to update Shipping prices",["message"=>$result['message'],"error message"=>$result['error']]);
+        }
     }
 }

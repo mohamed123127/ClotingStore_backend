@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('wilayas', function (Blueprint $table) {
-            $table->integer('id')->primary();
-            $table->string('name');
-            $table->integer('stopDeskTarif')->default(0);
-            $table->integer('homeTarif')->default(0);
-            $table->boolean('is_deliverable')->default(true);
+        Schema::create('sales', function (Blueprint $table) {
+            $table->id();
+            $table->string('status');
+            $table->foreignId('customer_id');
         });
     }
 
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('wilayas');
+        Schema::dropIfExists('sales');
     }
 };

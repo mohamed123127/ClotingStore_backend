@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShippingPrice extends Model
 {
-    protected $fillable = ['wilaya_id','commune_id','stopDeskTarif','homeTarif'];
+    protected $fillable = ['minStopDeskTarif','maxStopDeskTarif','minHomeTarif','maxHomeTarif','defrence','id'];
     public $timestamps = false;
 }

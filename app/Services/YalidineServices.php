@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Models\Agence;
 use App\Models\commune;
+use App\Models\ShippingPrice;
 use App\Models\Wilaya;
 use Exception;
 use Illuminate\Support\Facades\Http;
@@ -136,12 +137,13 @@ if ($response->successful()) {
 
     public static function fetchShippingPrices(){
         $wilayasId = Wilaya::pluck('id')->toArray();
-        $pageNumber  = 1;
+
         try{
-                Log::info("Start fetching shipping prices");
-                $url = "https://api.yalidine.app/v1/fees/?from_wilaya_id=16&to_wilaya_id=";
+            Log::info("Start fetching shipping prices");
+            $url = "https://api.yalidine.app/v1/fees/?from_wilaya_id=16&to_wilaya_id=";
 
             foreach($wilayasId as $wilayaId) {
+                Log::info("Fetching shipping prices for wilaya id: ".$wilayaId);
                 $urlToFetch = $url . $wilayaId;
     $response = Http::withoutVerifying()->withHeaders( [
         'X-API-ID' => '67123532299108446759',
@@ -149,42 +151,41 @@ if ($response->successful()) {
     ])->get($urlToFetch);
 
     $data = $response->json();
-    return ["status"=>"test","data" => $data];
+    // Log::info("Data received",["data"=>$data['per_commune']]);
+    // return ["status"=>"test","data" => $data];
 if ($response->successful()) {
-    foreach ($data['data'] as $item) {
-        commune::updateOrCreate(
-            ['id' => $item['id']],
+    $minStopDeskPrice = 99999;
+    $minHomePrice = 99999;
+    foreach ($data['per_commune'] as $item) {
+        //Log::info("Storing shipping price for wilaya id: ",["data"=>json_encode($item)]);
+        if($item['express_desk'] <= $minStopDeskPrice) $minStopDeskPrice = $item['express_desk'];
+        if($item['express_home'] <= $minHomePrice) $minHomePrice = $item['express_home'];
+    }
+    Wilaya::updateOrCreate(
+            ['id' => $wilayaId],
             [
-                'name' => $item['name'],
-                'is_deliverable' => $item['is_deliverable'],
-                'has_stop_desk' => $item['has_stop_desk'],
-                'wilaya_id' => $item['wilaya_id']
+                'stopDeskTarif' => $minStopDeskPrice,
+                'homeTarif' => $minHomePrice,
             ]
         );
-    }
-
-    Log::info("fettching page numbre ".$pageNumber);
-    $url = $data['links']['next'] ?? null;
-    $pageNumber=$pageNumber+1;
-
+    //$url = $data['links']['next'] ?? null;
+    usleep(1500000);
     // 👇 prevent exceeding 5 requests/sec
-    if ($url) {
-        usleep(500000); // 0.5 sec pause
-    }else{
-        return ["status"=>true];
-    }
+    // if ($url) {
+    //     usleep(500000); // 0.5 sec pause
+    // }else{
+    // }
 
-    }else{
-        return ["status" => false,"message" => "Failled to fetch data from api","error" => $data];
-    }
+}else{
+    return ["status" => false,"message" => "Failled to fetch data from api","error" => $data];
+}
 
 }
 
-                return ["status" => false,"message" => "Failled to fetch data from api","error" => $response->json()->body()];
+return ["status"=>true];
+                //return ["status" => false,"message" => "Failled to fetch data from api","error" => $response->json()->body()];
         }catch(Exception $e){
             return ["status" => false,"message" => "an exception occurred","error" => $e->getMessage()];;
         }
     }
 }
-
-

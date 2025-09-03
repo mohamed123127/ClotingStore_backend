@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Wilaya extends Model
 {
-    protected $fillable = ['id','name','is_deliverable'];
+    protected $fillable = ['id','name','stopDeskTarif','homeTarif','is_deliverable'];
     public $timestamps = false;
 
     public function communes()

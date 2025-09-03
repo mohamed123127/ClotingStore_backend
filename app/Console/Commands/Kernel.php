@@ -14,7 +14,9 @@ class Kernel extends ConsoleKernel
     {
         // مثال: شغل كومانديتك كل ساعة
         $schedule->command('run:fetch-wilayas')->dailyAt('02:00');
-        $schedule->command('run:fetch-communes')->dailyAt('02:10');
+        $schedule->command('run:fetch-communes')->dailyAt('02:5');
+        $schedule->command('run:fetch-agences')->dailyAt('02:10');
+        $schedule->command('run:fetch-shipping-prices')->dailyAt('02:15');
     }
 
     /**
