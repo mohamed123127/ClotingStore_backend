@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('status');
             $table->foreignId('customer_id');
+            $table->timestamps();
         });
     }
 

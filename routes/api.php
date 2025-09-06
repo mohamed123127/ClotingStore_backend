@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImagesController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SizesController;
 use App\Http\Controllers\VariantController;
 use App\Http\Controllers\WilayaController;
@@ -55,6 +57,7 @@ Route::put('variants/{id}', [VariantController::class, 'update']);
 Route::delete('variants/{id}', [VariantController::class, 'destroy']);
 
 Route::apiResource('categories', CategoryController::class);
+Route::apiResource('customers', CustomerController::class)->only(['index','store']);
 
 //All Yalidine Routes
 Route::prefix('yalidine/')->group(function(){
@@ -63,6 +66,8 @@ Route::prefix('yalidine/')->group(function(){
     Route::get("communes/{wilaya_id}/hasAgence",[YalidineController::class,'GetCommunes_hasAgences']);
     Route::get("agences/{commune_id}",[YalidineController::class,'GetAgences']);
 });
+
+Route::apiResource("sales",SaleController::class)->only(['store']);
 
 Route::get('test',function (){
     $x = YalidineServices::fetchWilayasAndStoreInDb();
