@@ -69,7 +69,9 @@ Route::prefix('yalidine/')->group(function(){
 
 Route::apiResource("sales",SaleController::class)->only(['store']);
 
-Route::get('test',function (){
-    $x = YalidineServices::fetchWilayasAndStoreInDb();
-    return $x;
+Route::post('test',function (Request $request){
+    $data = $request->all();
+    return response()->json([
+        "request" => $data
+    ]);
 });

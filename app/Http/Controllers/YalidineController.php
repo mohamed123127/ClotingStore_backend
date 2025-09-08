@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agence;
-use App\Models\commune;
-use App\Models\Commune as ModelsCommune;
+use App\Models\Commune;
 use App\Models\Wilaya;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;

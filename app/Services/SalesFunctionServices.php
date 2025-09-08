@@ -53,13 +53,15 @@ public function saveCustomerTargetSize($customerId,$sizes){
         ];
     }
 
-    public function saveSale($customerId){
+    public function saveSale($tracking,$customerId,$shippingLabel){
         $sale = Sale::create([
+            "id" => $tracking,
             "status" => "En préparation",
-            "customer_id" => $customerId,
+            "shipping_label" => $shippingLabel,
+            "customer_id" => $customerId
         ]);
 
-        return $sale->id;
+        return $sale;
     }
 
     public function saveSaleDetaillies($saleId,$soldItems){
