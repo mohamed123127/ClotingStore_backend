@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Agence;
 use App\Models\Commune;
 use App\Models\Wilaya;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -51,6 +52,8 @@ class YalidineController extends Controller
     }
 
     public function GetCommunes_hasAgences($wilayaId){
+        try{
+
         $wilaya = Wilaya::find($wilayaId);
 
     if (!$wilaya) {
@@ -77,6 +80,12 @@ class YalidineController extends Controller
                 'wilaya' => $wilaya->name,
                 'communes' => $communes
         ]);
+        }catch(Exception $e){
+             return response()->json([
+                'message' => 'error in the server',
+                'error' => $e->getMessage(),
+        ]);
+        }
     }
 
     public function GetAgences($communeId){
