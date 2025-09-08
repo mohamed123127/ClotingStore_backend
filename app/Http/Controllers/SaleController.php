@@ -7,6 +7,7 @@ use App\Http\Requests\SaleRequest;
 use App\Models\Variant;
 use App\Services\SalesFunctionServices;
 use App\Services\YalidineServices;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -58,7 +59,7 @@ public function store(SaleRequest $request)
                 "label" => $parcel["label"]
             ]);
         });
-    } catch (\Throwable $e) {
+    } catch (Exception $e) {
         Log::error("Sale store failed: " . $e->getMessage());
 
         return response()->json([
