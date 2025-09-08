@@ -2,8 +2,7 @@
 namespace App\Services;
 
 use App\Models\Agence;
-use App\Models\commune;
-use App\Models\ShippingPrice;
+use App\Models\Commune;
 use App\Models\Variant;
 use App\Models\Wilaya;
 use Exception;
@@ -53,7 +52,7 @@ class YalidineServices{
     $data = $response->json();
 if ($response->successful()) {
     foreach ($data['data'] as $item) {
-        commune::updateOrCreate(
+        Commune::updateOrCreate(
             ['id' => $item['id']],
             [
                 'name' => $item['name'],
