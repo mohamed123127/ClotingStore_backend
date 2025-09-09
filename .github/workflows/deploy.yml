@@ -31,6 +31,11 @@ jobs:
           git fetch origin
           git reset --hard origin/main
 
+          if [ -f app/Console/Commands/Kernel.php ]; then
+              echo "Removing conflicting Kernel file..."
+              rm app/Console/Commands/Kernel.php
+          fi
+
           # 3. تثبيت المكتبات على السيرفر
           composer install --no-interaction --prefer-dist --optimize-autoloader
 
