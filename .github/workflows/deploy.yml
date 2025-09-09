@@ -48,5 +48,5 @@ jobs:
           php artisan view:cache
 
           # 6. إعادة تشغيل الخدمات
-          sudo systemctl restart php8.1-fpm
+          sudo systemctl restart php8.3-fpm
           sudo systemctl reload nginx
