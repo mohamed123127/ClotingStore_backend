@@ -23,8 +23,8 @@ jobs:
 
           # 1. إنشاء نسخة احتياطية للـ DB
           TIMESTAMP=$(date +%F-%H-%M-%S)
-          export MYSQL_PWD=${DB_PASS}
-          mysqldump -u ${DB_USER} --no-tablespaces ${DB_NAME} > /var/backups/clothingDbBackup/db_backup_before_pull_$TIMESTAMP.sql
+          export MYSQL_PWD=${{ secrets.DB_PASS }}
+          mysqldump -u ${{ secrets.DB_USER }} --no-tablespaces ${{ secrets.DB_NAME }} > /var/backups/clothingDbBackup/db_backup_before_pull_$TIMESTAMP.sql
           unset MYSQL_PWD
 
           # 2. تحديث الكود بدون مشاكل Conflict
