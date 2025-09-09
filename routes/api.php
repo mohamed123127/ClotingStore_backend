@@ -70,8 +70,8 @@ Route::prefix('yalidine/')->group(function(){
 Route::apiResource("sales",SaleController::class)->only(['store']);
 
 Route::post('test',function (Request $request){
-    $data = $request->all();
+    //$data = $request->all();
     return response()->json([
-        "request" => $data
+        "request" => "test upload"
     ]);
 });
