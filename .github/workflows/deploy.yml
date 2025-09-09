@@ -1,0 +1,47 @@
+name: Deploy Laravel API
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Deploy to VPS
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USER }}
+        key: ${{ secrets.VPS_KEY }}
+        script: |
+          cd /var/www/ClotingStore_backend
+
+          # 1. إنشاء نسخة احتياطية للـ DB
+          TIMESTAMP=$(date +%F-%H-%M-%S)
+          export MYSQL_PWD=${DB_PASS}
+          mysqldump -u ${DB_USER} --no-tablespaces ${DB_NAME} > /var/backups/clothingDbBackup/db_backup_before_pull_$TIMESTAMP.sql
+          unset MYSQL_PWD
+
+          # 2. تحديث الكود بدون مشاكل Conflict
+          git fetch origin
+          git reset --hard origin/main
+
+          # 3. تثبيت المكتبات على السيرفر
+          composer install --no-interaction --prefer-dist --optimize-autoloader
+
+          # 4. تحديث قاعدة البيانات
+          php artisan migrate --force
+
+          # 5. تحسين الكاش
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+
+          # 6. إعادة تشغيل الخدمات
+          sudo systemctl restart php8.1-fpm
+          sudo systemctl reload nginx
