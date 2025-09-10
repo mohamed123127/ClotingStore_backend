@@ -12,8 +12,13 @@ use App\Http\Controllers\WilayaController;
 use App\Http\Controllers\Yalidine;
 use App\Http\Controllers\YalidineController;
 use App\Models\Categorie;
+use App\Models\Product;
+use App\Models\ProductImages;
+use App\Models\Size;
+use App\Models\Variant;
 use App\Services\Yalidine\wilayaServices;
 use App\Services\YalidineServices;
+use Cloudinary\Tag\Sizes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*Route::get('/user', function (Request $request) {
@@ -51,7 +56,7 @@ Route::get('sizes',[SizesController::class,'getAllSizes']);
 Route::put('sizes/{id}', [SizesController::class, 'update']);
 Route::delete('sizes/{id}', [SizesController::class, 'destroy']);
 
-//Extravariants API Routes
+//Extra variants API Routes
 Route::get('variants/colors',[VariantController::class,'getAllColors']);
 Route::put('variants/{id}', [VariantController::class, 'update']);
 Route::delete('variants/{id}', [VariantController::class, 'destroy']);
@@ -69,9 +74,39 @@ Route::prefix('yalidine/')->group(function(){
 
 Route::apiResource("sales",SaleController::class)->only(['store']);
 
-Route::post('test',function (Request $request){
-    //$data = $request->all();
+Route::get('test',function (Request $request){
+    $data = $request->all();
+    $product = Product::find($data["id"]);
+    $productId = $product->id;
+    foreach($data["productImages"] as $productImage){
+        ProductImages::create([
+            "image_url" => $productImage,
+            "product_id" => $productId
+        ]);
+    };
+
+    foreach($data["sizes"] as $size){
+        Size::create([
+            "size" => $size,
+            "product_id" => $productId
+        ]);
+    };
+
+    $sizesId = Size::where('product_id', $productId)->pluck('id');
+    foreach($data["variants"] as $variant){
+        foreach($sizesId as $size){
+                Variant::create([
+                "size_id" => $size,
+                "color" => $variant["color"],
+                "quantity" => $variant["quantity"],
+                "product_id" => $productId
+                ]);
+    };
+};
+
+    // $productId =
     return response()->json([
-        "request" => "test upload"
+        "product" => $productId,
+        "data" => $sizesId
     ]);
 });
