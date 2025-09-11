@@ -74,7 +74,7 @@ Route::prefix('yalidine/')->group(function(){
 
 Route::apiResource("sales",SaleController::class)->only(['store']);
 
-Route::get('test',function (Request $request){
+Route::post('test',function (Request $request){
     $data = $request->all();
     $product = Product::find($data["id"]);
     $productId = $product->id;

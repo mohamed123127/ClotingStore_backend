@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 11, 2025 at 12:35 AM
+-- Generation Time: Sep 11, 2025 at 01:12 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.4.6
 
@@ -291,7 +291,18 @@ INSERT INTO `products` (`id`, `name`, `description`, `price`, `sex`, `preview_im
 (19, 'Imad', NULL, 3800.00, 'M', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757446687/ab79b2ca-50a7-41b4-9690-b1d4be3c5074_vzsrl1.jpg', NULL, NULL),
 (20, 'Podest', NULL, 4800.00, 'M', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757537251/download_r76aqs.jpg', NULL, NULL),
 (21, 'Sara', NULL, 5200.00, 'F', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757451619/44539d72-2ff7-45a9-94fd-bded69455823_sv5hqn.jpg', NULL, NULL),
-(22, 'Malek', NULL, 5500.00, 'M', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757448448/9315328d-7674-494c-a435-e2b46916dd7a_xoiezp.jpg', NULL, NULL);
+(22, 'Malek', NULL, 5500.00, 'M', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757448448/9315328d-7674-494c-a435-e2b46916dd7a_xoiezp.jpg', NULL, NULL),
+(24, 'Eline', NULL, 4400.00, 'F', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757587290/540626152_752410570734565_104250468323788192_n_patnns.jpg', NULL, NULL),
+(25, 'Dream', NULL, 4400.00, 'F', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757587530/539284803_122105627042990052_3798334608979933827_n_ervkcz.jpg', NULL, NULL),
+(26, 'Sabrina', NULL, 5800.00, 'F', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757587691/539586338_122105627306990052_6126068052166348555_n_daxiv0.jpg', NULL, NULL),
+(27, 'LoB', NULL, 4400.00, 'U', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757587858/540960399_733281659699691_110313565692672285_n_n2nopo.jpg', NULL, NULL),
+(28, 'Werda', NULL, 5800.00, 'F', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757585616/1_b9lemg.jpg', NULL, NULL),
+(29, 'Hiphop', NULL, 5400.00, 'M', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757587942/de27b3f3-67d8-4940-a085-a46e17aada79_rdmu4n.jpg', NULL, NULL),
+(30, 'Lee rose', NULL, 5800.00, 'U', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757588214/537049920_1096388082094454_7138684394785157816_n_gdowur.jpg', NULL, NULL),
+(31, 'Rayane', NULL, 5800.00, 'U', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757588362/540474686_122105626940990052_2166092508004331718_n_hqxjlr.jpg', NULL, NULL),
+(32, 'Anias', NULL, 5800.00, 'F', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757588717/8b502e37-449a-46e7-975b-3cd9e12b7b39_xbjso8.jpg', NULL, NULL),
+(33, 'Meriem', NULL, 5400.00, 'F', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757586877/f4b8bc4f-c27f-4ca5-8679-22d4a3325dc3_sb6mzr.jpg', NULL, NULL),
+(34, 'Sta', NULL, 5800.00, 'F', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757588806/7fd022ac-ae0a-400c-b7a0-728c83bfc5bb_q3ebgt.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -351,7 +362,14 @@ INSERT INTO `product_images` (`id`, `image_url`, `product_id`) VALUES
 (57, 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757541609/eac5d2a5-454d-4f89-95a9-c8f1414189bd_iq4g6y.jpg', 16),
 (58, 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757541607/540003150_1311719083681490_6341225223022705954_n_bhzwu1.jpg', 16),
 (59, 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757542266/a1ac6a5d-cd19-4e64-b656-329f1e8e3d04_x1luvo.jpg', 19),
-(60, 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757542803/1000010146_pq4dr1.jpg', 18);
+(60, 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757542803/1000010146_pq4dr1.jpg', 18),
+(61, 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757584881/14ba5e1e-ea80-40ba-b70b-da8b4a1385c1_y47clk.jpg', 18),
+(63, 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757585299/541615393_1310578730708908_7528865646795856426_n_tsutqs.jpg', 28),
+(64, 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757587289/540579884_24533786012926921_1810634633863646449_n_hppi5h.jpg', 24),
+(65, 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757587286/540094015_662322016912376_5719907579624128300_n_wxsmpm.jpg', 24),
+(66, 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757588212/541656826_2178153406002856_6422103395469501148_n_vh4w4d.jpg', 30),
+(67, 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757588211/541039554_2848600852196851_7890263054864876422_n_zpcbs4.jpg', 30),
+(68, 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757588718/541056553_641487675691886_2731846566878630149_n_ankcyq.jpg', 32);
 
 -- --------------------------------------------------------
 
@@ -509,7 +527,62 @@ INSERT INTO `sizes` (`id`, `size`, `product_id`) VALUES
 (71, '2-3', 18),
 (72, '3-4', 18),
 (73, '4-5', 18),
-(74, '5-6', 18);
+(74, '5-6', 18),
+(75, '6-7', 28),
+(76, '8-9', 28),
+(77, '10-11', 28),
+(78, '12-13', 28),
+(79, '14-15', 28),
+(80, '6-7', 33),
+(81, '8-9', 33),
+(82, '10-11', 33),
+(83, '12-13', 33),
+(84, '14-15', 33),
+(85, '6-7', 24),
+(86, '8-9', 24),
+(87, '10-11', 24),
+(88, '12-13', 24),
+(89, '14-15', 24),
+(90, '6-7', 25),
+(91, '8-9', 25),
+(92, '10-11', 25),
+(93, '12-13', 25),
+(94, '14-15', 25),
+(95, '6-7', 26),
+(96, '8-9', 26),
+(97, '10-11', 26),
+(98, '12-13', 26),
+(99, '14-15', 26),
+(100, '6-7', 27),
+(101, '8-9', 27),
+(102, '10-11', 27),
+(103, '12-13', 27),
+(104, '14-15', 27),
+(105, '6-7', 29),
+(106, '8-9', 29),
+(107, '10-11', 29),
+(108, '12-13', 29),
+(109, '14-15', 29),
+(110, '6-7', 30),
+(111, '8-9', 30),
+(112, '10-11', 30),
+(113, '12-13', 30),
+(114, '14-15', 30),
+(115, '6-7', 31),
+(116, '8-9', 31),
+(117, '10-11', 31),
+(118, '12-13', 31),
+(119, '14-15', 31),
+(120, '6-7', 32),
+(121, '8-9', 32),
+(122, '10-11', 32),
+(123, '12-13', 32),
+(124, '14-15', 32),
+(130, '6-7', 34),
+(131, '8-9', 34),
+(132, '10-11', 34),
+(133, '12-13', 34),
+(134, '14-15', 34);
 
 -- --------------------------------------------------------
 
@@ -540,18 +613,6 @@ INSERT INTO `temp_table` (`id`, `name`, `price`, `sex`, `preview_image`) VALUES
 (8, 'Rayane', '5800.00', 'U', NULL),
 (9, 'Anias', '5800.00', 'F', NULL),
 (10, 'Meriem', '5400.00', 'F', NULL),
-(11, 'Affnane', '4900.00', 'F', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757448520/a93d03c4-32cf-48ad-9233-c677f9012872_cxsgen.jpg'),
-(12, 'Anes', '5800.00', 'M', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757540843/Creativ1_fkdqjq_drufcq.webp'),
-(13, 'Lea', '4800.00', 'F', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757539336/2515907c-7bb9-43b2-b42b-4ffc29fde972_ge4t9u.jpg'),
-(14, 'Chahin', '5200.00', 'M', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757452350/eef5cbeb-e1c7-4278-a508-e2890798c2c2_carwp5.jpg'),
-(15, 'Zahra', '4300.00', 'F', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757542153/956f07d6-2dc8-442f-b139-0ca85429313a_n5d03x.jpg'),
-(16, 'Adem', '4000.00', 'M', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757541608/7a3917c6-0225-4257-a0f5-20e943ec76d5_jw0c0i.jpg'),
-(17, 'Iyad', '5600.00', 'M', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757540106/66100bba-0065-4b67-bbe0-09c0245220c8_gkpaae.jpg'),
-(18, 'Racim', '4400.00', 'M', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757542802/1000010143_r9jkjs.jpg'),
-(19, 'Imad', '3800.00', 'M', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757446687/ab79b2ca-50a7-41b4-9690-b1d4be3c5074_vzsrl1.jpg'),
-(20, 'Podest', '4800.00', 'M', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757537251/download_r76aqs.jpg'),
-(21, 'Sara', '5200.00', 'F', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757451619/44539d72-2ff7-45a9-94fd-bded69455823_sv5hqn.jpg'),
-(22, 'Malek', '5500.00', 'M', 'https://res.cloudinary.com/dpmow9eng/image/upload/v1757448448/9315328d-7674-494c-a435-e2b46916dd7a_xoiezp.jpg'),
 (23, 'Sta', '5800.00', 'F', NULL);
 
 -- --------------------------------------------------------
@@ -650,16 +711,16 @@ INSERT INTO `variants` (`id`, `color`, `size_id`, `quantity`, `product_id`) VALU
 (84, 'Vert', 52, 1, 17),
 (85, 'Vert', 53, 1, 17),
 (86, 'Vert', 54, 1, 17),
-(87, 'Vert', 55, 1, 12),
-(88, 'Vert', 56, 1, 12),
-(89, 'Vert', 57, 1, 12),
-(90, 'Vert', 58, 1, 12),
-(91, 'Vert', 59, 1, 12),
-(92, 'Bleu', 55, 1, 12),
-(93, 'Bleu', 56, 1, 12),
-(94, 'Bleu', 57, 1, 12),
-(95, 'Bleu', 58, 1, 12),
-(96, 'Bleu', 59, 1, 12),
+(87, 'Vert', 55, 2, 12),
+(88, 'Vert', 56, 2, 12),
+(89, 'Vert', 57, 2, 12),
+(90, 'Vert', 58, 2, 12),
+(91, 'Vert', 59, 2, 12),
+(92, 'Bleu', 55, 2, 12),
+(93, 'Bleu', 56, 2, 12),
+(94, 'Bleu', 57, 2, 12),
+(95, 'Bleu', 58, 2, 12),
+(96, 'Bleu', 59, 2, 12),
 (97, 'Blanc', 60, 1, 16),
 (98, 'Blanc', 61, 1, 16),
 (99, 'Blanc', 62, 1, 16),
@@ -674,7 +735,137 @@ INSERT INTO `variants` (`id`, `color`, `size_id`, `quantity`, `product_id`) VALU
 (108, 'Beige', 71, 1, 18),
 (109, 'Beige', 72, 1, 18),
 (110, 'Beige', 73, 1, 18),
-(111, 'Beige', 74, 1, 18);
+(111, 'Beige', 74, 1, 18),
+(112, 'Rose', 75, 1, 28),
+(113, 'Rose', 76, 1, 28),
+(114, 'Rose', 77, 1, 28),
+(115, 'Rose', 78, 1, 28),
+(116, 'Rose', 79, 1, 28),
+(117, 'Bleu', 75, 1, 28),
+(118, 'Bleu', 76, 1, 28),
+(119, 'Bleu', 77, 1, 28),
+(120, 'Bleu', 78, 1, 28),
+(121, 'Bleu', 79, 1, 28),
+(122, 'Beige', 75, 1, 28),
+(123, 'Beige', 76, 1, 28),
+(124, 'Beige', 77, 1, 28),
+(125, 'Beige', 78, 1, 28),
+(126, 'Beige', 79, 1, 28),
+(127, 'Motard', 80, 1, 33),
+(128, 'Motard', 81, 1, 33),
+(129, 'Motard', 82, 1, 33),
+(130, 'Motard', 83, 1, 33),
+(131, 'Motard', 84, 1, 33),
+(132, 'Vert', 85, 1, 24),
+(133, 'Vert', 86, 1, 24),
+(134, 'Vert', 87, 1, 24),
+(135, 'Vert', 88, 1, 24),
+(136, 'Vert', 89, 1, 24),
+(137, 'Noir', 85, 1, 24),
+(138, 'Noir', 86, 1, 24),
+(139, 'Noir', 87, 1, 24),
+(140, 'Noir', 88, 1, 24),
+(141, 'Noir', 89, 1, 24),
+(142, 'Motard', 85, 1, 24),
+(143, 'Motard', 86, 1, 24),
+(144, 'Motard', 87, 1, 24),
+(145, 'Motard', 88, 1, 24),
+(146, 'Motard', 89, 1, 24),
+(147, 'Vert', 90, 1, 25),
+(148, 'Vert', 91, 1, 25),
+(149, 'Vert', 92, 1, 25),
+(150, 'Vert', 93, 1, 25),
+(151, 'Vert', 94, 1, 25),
+(152, 'Noir', 90, 1, 25),
+(153, 'Noir', 91, 1, 25),
+(154, 'Noir', 92, 1, 25),
+(155, 'Noir', 93, 1, 25),
+(156, 'Noir', 94, 1, 25),
+(157, 'Beige', 90, 1, 25),
+(158, 'Beige', 91, 1, 25),
+(159, 'Beige', 92, 1, 25),
+(160, 'Beige', 93, 1, 25),
+(161, 'Beige', 94, 1, 25),
+(162, 'Rose', 95, 2, 26),
+(163, 'Rose', 96, 2, 26),
+(164, 'Rose', 97, 2, 26),
+(165, 'Rose', 98, 2, 26),
+(166, 'Rose', 99, 2, 26),
+(167, 'Motard', 95, 1, 26),
+(168, 'Motard', 96, 1, 26),
+(169, 'Motard', 97, 1, 26),
+(170, 'Motard', 98, 1, 26),
+(171, 'Motard', 99, 1, 26),
+(172, 'Vert', 100, 1, 27),
+(173, 'Vert', 101, 1, 27),
+(174, 'Vert', 102, 1, 27),
+(175, 'Vert', 103, 1, 27),
+(176, 'Vert', 104, 1, 27),
+(177, 'Noir', 100, 1, 27),
+(178, 'Noir', 101, 1, 27),
+(179, 'Noir', 102, 1, 27),
+(180, 'Noir', 103, 1, 27),
+(181, 'Noir', 104, 1, 27),
+(182, 'Vert', 105, 1, 29),
+(183, 'Vert', 106, 1, 29),
+(184, 'Vert', 107, 1, 29),
+(185, 'Vert', 108, 1, 29),
+(186, 'Vert', 109, 1, 29),
+(187, 'Noir', 105, 1, 29),
+(188, 'Noir', 106, 1, 29),
+(189, 'Noir', 107, 1, 29),
+(190, 'Noir', 108, 1, 29),
+(191, 'Noir', 109, 1, 29),
+(192, 'Marron', 105, 1, 29),
+(193, 'Marron', 106, 1, 29),
+(194, 'Marron', 107, 1, 29),
+(195, 'Marron', 108, 1, 29),
+(196, 'Marron', 109, 1, 29),
+(197, 'Beige', 105, 1, 29),
+(198, 'Beige', 106, 1, 29),
+(199, 'Beige', 107, 1, 29),
+(200, 'Beige', 108, 1, 29),
+(201, 'Beige', 109, 1, 29),
+(202, 'Motard', 110, 1, 30),
+(203, 'Motard', 111, 1, 30),
+(204, 'Motard', 112, 1, 30),
+(205, 'Motard', 113, 1, 30),
+(206, 'Motard', 114, 1, 30),
+(207, 'Noir', 110, 1, 30),
+(208, 'Noir', 111, 1, 30),
+(209, 'Noir', 112, 1, 30),
+(210, 'Noir', 113, 1, 30),
+(211, 'Noir', 114, 1, 30),
+(212, 'Marron', 110, 1, 30),
+(213, 'Marron', 111, 1, 30),
+(214, 'Marron', 112, 1, 30),
+(215, 'Marron', 113, 1, 30),
+(216, 'Marron', 114, 1, 30),
+(217, 'Beige', 110, 1, 30),
+(218, 'Beige', 111, 1, 30),
+(219, 'Beige', 112, 1, 30),
+(220, 'Beige', 113, 1, 30),
+(221, 'Beige', 114, 1, 30),
+(222, 'Marron', 115, 1, 31),
+(223, 'Marron', 116, 1, 31),
+(224, 'Marron', 117, 1, 31),
+(225, 'Marron', 118, 1, 31),
+(226, 'Marron', 119, 1, 31),
+(227, 'Beige', 120, 1, 32),
+(228, 'Beige', 121, 1, 32),
+(229, 'Beige', 122, 1, 32),
+(230, 'Beige', 123, 1, 32),
+(231, 'Beige', 124, 1, 32),
+(232, 'Rose', 120, 1, 32),
+(233, 'Rose', 121, 1, 32),
+(234, 'Rose', 122, 1, 32),
+(235, 'Rose', 123, 1, 32),
+(236, 'Rose', 124, 1, 32),
+(247, 'Rose', 130, 1, 34),
+(248, 'Rose', 131, 1, 34),
+(249, 'Rose', 132, 1, 34),
+(250, 'Rose', 133, 1, 34),
+(251, 'Rose', 134, 1, 34);
 
 -- --------------------------------------------------------
 
@@ -936,13 +1127,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `product_measurement`
@@ -960,13 +1151,13 @@ ALTER TABLE `sale_detailles`
 -- AUTO_INCREMENT for table `sizes`
 --
 ALTER TABLE `sizes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
 
 --
 -- AUTO_INCREMENT for table `temp_table`
 --
 ALTER TABLE `temp_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -978,7 +1169,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `variants`
 --
 ALTER TABLE `variants`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=252;
 
 --
 -- Constraints for dumped tables
