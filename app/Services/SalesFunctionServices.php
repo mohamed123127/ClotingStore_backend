@@ -2,11 +2,13 @@
 namespace App\Services;
 
 use App\Http\Requests\CustomerRequest;
+use App\Models\Agence;
 use App\Models\Customer;
 use App\Models\CustomerTargetSize;
 use App\Models\Sale;
 use App\Models\SaleDetaille;
 use App\Models\Variant;
+use App\Models\Wilaya;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
@@ -53,10 +55,30 @@ public function saveCustomerTargetSize($customerId,$sizes){
         ];
     }
 
-    public function saveSale($tracking,$customerId,$shippingLabel){
+    public function saveSale($tracking,$customerId,$shippingLabel,$shippingDetaillies){
+        $agence_or_address = "";
+        $shippingPrice = 0;
+        if($shippingDetaillies['shippingMethod'] == "stopDesk"){
+            $agence = Agence::find($shippingDetaillies["stopDeskId"]);
+            $agence_or_address = $agence->name;
+
+            $wilaya = Wilaya::where("name",$shippingDetaillies["wilaya"])->first();
+            $shippingPrice = $wilaya->stopDeskTarif;
+        }else{
+            $wilaya = Wilaya::where("name",$shippingDetaillies["wilaya"]);
+            $agence_or_address = $shippingDetaillies["address"];
+
+            $wilaya = Wilaya::where("name",$shippingDetaillies["wilaya"])->first();
+            $shippingPrice = $wilaya->homeTarif;
+        }
+
         $sale = Sale::create([
             "id" => $tracking,
             "status" => "En préparation",
+            "wilaya" => $shippingDetaillies['wilaya'],
+            "commune" => $shippingDetaillies['commune'],
+            "agence_or_address" => $agence_or_address,
+            "shipping_price" => $shippingPrice,
             "shipping_label" => $shippingLabel,
             "customer_id" => $customerId
         ]);

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sale extends Model
 {
-    protected $fillable = ['id','status','shipping_label','customer_id'];
+    protected $fillable = ['id','status','wilaya','commune','agence_or_address','shipping_price','shipping_label','customer_id'];
     public $incrementing = false;
     protected $keyType = 'string';
 

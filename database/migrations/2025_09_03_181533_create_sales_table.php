@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->string('status');
+            $table->string('wilaya');
+            $table->string('commune');
+            $table->string('agence_or_address');
+            $table->string('shipping_price');
             $table->string('shipping_label');
             $table->foreignId('customer_id');
             $table->timestamps();

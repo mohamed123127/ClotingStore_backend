@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CustomerRequest;
 use App\Http\Requests\SaleRequest;
+use App\Http\Resources\SaleResource;
 use App\Models\Sale;
 use App\Models\Variant;
 use App\Services\SalesFunctionServices;
@@ -17,11 +18,17 @@ use Illuminate\Support\Facades\Log;
 class SaleController extends Controller
 {
 public function index(){
-    $sales = Sale::with("saledItems")->with("customer")->get();
+    $sales = Sale::orderBy('updated_at', 'asc')->paginate(20);
+
+    // return response()->json($sales);
 
     return response()->json([
         "message" => "sales returned successfully",
-        "sales" => $sales
+        'total_sales' => $sales->total(), // total count in DB
+        'current_page'   => $sales->currentPage(),
+        'sales_per_page' => $sales->perPage(),
+        'last_page'  => $sales->lastPage(),
+        "sales" => SaleResource::collection($sales)
     ]);
 }
 
@@ -56,7 +63,7 @@ public function store(SaleRequest $request)
             $parcel = $YalidineResponse["data"];
 
             // save sale
-            $sale = $salesUnits->saveSale($parcel['tracking'],$customerId,$parcel['label']);
+            $sale = $salesUnits->saveSale($parcel['tracking'],$customerId,$parcel['label'],$shippingDetaillies);
 
             // save sale Detaillies
             $salesUnits->saveSaleDetaillies($parcel['tracking'],$soldItems);
@@ -66,7 +73,7 @@ public function store(SaleRequest $request)
                 "message" => "sale added successfully",
                 "saleId" => $parcel["tracking"],
                 "label" => $parcel["label"]
-            ]);
+            ],201);
         });
     } catch (Exception $e) {
         Log::error("Sale store failed: " . $e->getMessage());
