@@ -22,16 +22,11 @@ use Illuminate\Support\Facades\Route;
 
 
 //Products API Routes
+Route::apiResource('products', ProductController::class);
 Route::get('products/MaxAndMinPrice',[ProductController::class,'getMaxAndMinPrice']);
 Route::get('products/genders',[ProductController::class,'getGenders']);
 
-Route::apiResource('products', ProductController::class);
-//Route::get('products/{id}/variants',[ProductController::class,'getProductVariants']);
-
 Route::prefix('products/{productId}/')->group(function () {
-    //Variants API Routes
-    // Route::apiResource('variants', ProductController::class)->only(['index', 'store', 'update', 'destroy']);
-
     //Images API Routes
     Route::apiResource('images', ProductImagesController::class)->only(['index', 'store', 'update', 'destroy']);
 
@@ -67,7 +62,7 @@ Route::prefix('yalidine/')->group(function(){
     Route::get("agences/{commune_id}",[YalidineController::class,'GetAgences']);
 });
 
-Route::apiResource("sales",SaleController::class)->only(['store']);
+Route::apiResource("sales",SaleController::class)->only(['index','store']);
 
 Route::get('test',function (){
     $x = YalidineServices::fetchWilayasAndStoreInDb();
