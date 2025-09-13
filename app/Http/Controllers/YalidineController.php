@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agence;
-use App\Models\commune;
-use App\Models\Commune as ModelsCommune;
+use App\Models\Commune;
 use App\Models\Wilaya;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Log;
 class YalidineController extends Controller
 {
     public function GetWilayas(){
-        $wilayas = Wilaya::all();
+        $wilayas = Wilaya::orderBy('name', 'asc')->get();
 
         if($wilayas->isEmpty()){
             Log::error("no wilayas found");
@@ -28,7 +28,9 @@ class YalidineController extends Controller
     }
 
      public function GetCommunes($wilayaId){
-        $data = Wilaya::with('communes')->find($wilayaId);
+        $data = Wilaya::with(['communes' => function ($query) {
+            $query->orderBy('name', 'asc');
+        }])->find($wilayaId);
 
     if (!$data) {
         Log::error("Wilaya not found for id: $wilayaId");
@@ -52,6 +54,8 @@ class YalidineController extends Controller
     }
 
     public function GetCommunes_hasAgences($wilayaId){
+        try{
+
         $wilaya = Wilaya::find($wilayaId);
 
     if (!$wilaya) {
@@ -62,9 +66,12 @@ class YalidineController extends Controller
     }
 
     $communes = Commune::where([
-                ['has_stop_desk', true],
-                ['wilaya_id', $wilayaId],
-            ])->get();
+        ['has_stop_desk', true],
+        ['wilaya_id', $wilayaId],
+    ])
+    ->orderBy('name', 'asc')
+    ->get();
+
 
     if ($communes->isEmpty()) {
         Log::error("no communes have agences found for wilaya id: $wilayaId");
@@ -78,6 +85,12 @@ class YalidineController extends Controller
                 'wilaya' => $wilaya->name,
                 'communes' => $communes
         ]);
+        }catch(Exception $e){
+             return response()->json([
+                'message' => 'error in the server',
+                'error' => $e->getMessage(),
+        ]);
+        }
     }
 
     public function GetAgences($communeId){
@@ -90,9 +103,9 @@ class YalidineController extends Controller
         ], 404);
     }
 
-    $agences = Agence::where([
-                ['commune_id', $communeId],
-            ])->get();
+    $agences = Agence::where('commune_id', $communeId)
+    ->orderBy('name', 'asc')
+    ->get();
 
     if ($agences->isEmpty()) {
         Log::error("no communes have agences found for commune id: $communeId");

@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->get('per_page', 10);
-        $products = Product::paginate($perPage);
+        $products = Product::orderBy('name', 'asc')->paginate($perPage);
 
         return response()->json([
             'message' => 'Products retrieved successfully',

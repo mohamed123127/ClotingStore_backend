@@ -2,8 +2,8 @@
 namespace App\Services;
 
 use App\Models\Agence;
-use App\Models\commune;
-use App\Models\ShippingPrice;
+use App\Models\Commune;
+use App\Models\Variant;
 use App\Models\Wilaya;
 use Exception;
 use Illuminate\Support\Facades\Http;
@@ -52,7 +52,7 @@ class YalidineServices{
     $data = $response->json();
 if ($response->successful()) {
     foreach ($data['data'] as $item) {
-        commune::updateOrCreate(
+        Commune::updateOrCreate(
             ['id' => $item['id']],
             [
                 'name' => $item['name'],
@@ -184,6 +184,62 @@ if ($response->successful()) {
 
 return ["status"=>true];
                 //return ["status" => false,"message" => "Failled to fetch data from api","error" => $response->json()->body()];
+        }catch(Exception $e){
+            return ["status" => false,"message" => "an exception occurred","error" => $e->getMessage()];;
+        }
+    }
+
+    public static function createParcel($customer,$shippingDetaillies,$soldItems){
+        try{
+            $productList = "";
+            $totalPrice = 0;
+            foreach ($soldItems as $soldItem) {
+                $variant = Variant::find($soldItem['variantId']);
+                if ($variant && $variant->product) {
+                    $productName = $variant->product->name;
+                    $productList .= "-{$productName} ";
+                }
+                $totalPrice += $soldItem['selling_price'] * $soldItem['quantity'];
+            }
+            $productList .= " (Jardin d'enfant)";
+            $processedData = [[
+                "order_id"=>"1",
+                "from_wilaya_name"=>"Alger",
+                "firstname"=>$customer["firstName"],
+                "familyname"=>$customer["lastName"],
+                "contact_phone"=>$customer["phone_number"],
+                "to_commune_name"=>$shippingDetaillies["commune"],
+                "to_wilaya_name"=>$shippingDetaillies["wilaya"],
+                "address" => $shippingDetaillies["address"],
+                "product_list"=>$productList,
+                "price"=>$totalPrice,
+                "do_insurance" => true,
+                "declared_value" => $totalPrice,
+                "height"=> 0,
+                "width" => 0,
+                "length" => 0,
+                "weight" => 0,
+                "freeshipping"=> false,
+                "has_exchange"=> false,
+                "is_stopdesk"=> false
+            ]];
+            if($shippingDetaillies['shippingMethod'] === "stopDesk"){
+                $processedData[0]["is_stopdesk"] = true;
+                $processedData[0]["stopDesk_id"] = $shippingDetaillies["stopDeskId"];
+            }
+    $response = Http::withoutVerifying()->withHeaders( [
+        'X-API-ID' => '67123532299108446759',
+        'X-API-TOKEN' => 't4x6NuMcUgbvsTk2z7k1fOzojocmXYF5LCKa8V0DWUDWKEQagry1NstEvRl9epVd',
+        "Content-Type" => "application/json"
+    ])->post("https://api.yalidine.app/v1/parcels",$processedData);
+
+    $data = $response->json();
+    if ($response->successful() && $data["1"]['success'] == true) {
+    return ["status" => true,"data" => $data["1"]];
+    }else{
+        return ["status" => false,"message" => "Failled to create parcel","response" => $data,"processedData" => $processedData];
+    }
+
         }catch(Exception $e){
             return ["status" => false,"message" => "an exception occurred","error" => $e->getMessage()];;
         }

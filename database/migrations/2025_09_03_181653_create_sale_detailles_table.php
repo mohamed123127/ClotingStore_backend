@@ -16,7 +16,9 @@ return new class extends Migration
             $table->foreignId('variant_id');
             $table->decimal('selling_price');
             $table->integer('quantity');
-            $table->foreignId('sale_id');
+            $table->string('sale_id');
+
+            $table->foreign('sale_id')->references('id')->on('sales')->onDelete('cascade');
         });
     }
 

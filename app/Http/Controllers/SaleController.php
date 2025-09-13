@@ -7,6 +7,8 @@ use App\Http\Requests\SaleRequest;
 use App\Models\Sale;
 use App\Models\Variant;
 use App\Services\SalesFunctionServices;
+use App\Services\YalidineServices;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -31,6 +33,7 @@ public function store(SaleRequest $request)
             $sale = "";
             $soldItems = $data["soldItems"];
             $customerData = $data["customer"];
+            $shippingDetaillies = $data["shippingDetaillies"];
             $salesUnits = new SalesFunctionServices();
 
             $salesUnits->checkStockAndDecreaseQuantity($soldItems);
@@ -41,20 +44,31 @@ public function store(SaleRequest $request)
             // save customer targe size
             // $salesUnits->saveCustomerTargetSize($customerId);
 
+            //create parcel in shipping company
+            $YalidineResponse = YalidineServices::createParcel($customerData,$shippingDetaillies,$soldItems);
+            if($YalidineResponse['status'] != "success"){
+                return response()->json([
+                "message" => $YalidineResponse["message"],
+                "response" => $YalidineResponse["response"],
+                "processedData" => $YalidineResponse["processedData"]
+        ], 400);
+            }
+            $parcel = $YalidineResponse["data"];
+
             // save sale
-            $saleId = $salesUnits->saveSale($customerId);
+            $sale = $salesUnits->saveSale($parcel['tracking'],$customerId,$parcel['label']);
 
             // save sale Detaillies
-            $salesUnits->saveSaleDetaillies($saleId,$soldItems);
-
-            //create parcel in shipping company
+            $salesUnits->saveSaleDetaillies($parcel['tracking'],$soldItems);
 
             return response()->json([
-                "message" => "Sale added successfully",
-                "sale" => $customerId
+                "status" => "success",
+                "message" => "sale added successfully",
+                "saleId" => $parcel["tracking"],
+                "label" => $parcel["label"]
             ]);
         });
-    } catch (\Throwable $e) {
+    } catch (Exception $e) {
         Log::error("Sale store failed: " . $e->getMessage());
 
         return response()->json([
