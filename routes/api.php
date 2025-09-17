@@ -27,9 +27,9 @@ use Illuminate\Support\Facades\Route;
 
 
 //Products API Routes
-Route::apiResource('products', ProductController::class);
 Route::get('products/MaxAndMinPrice',[ProductController::class,'getMaxAndMinPrice']);
 Route::get('products/genders',[ProductController::class,'getGenders']);
+Route::apiResource('products', ProductController::class);
 
 Route::prefix('products/{productId}/')->group(function () {
     //Images API Routes

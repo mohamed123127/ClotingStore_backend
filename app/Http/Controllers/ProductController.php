@@ -15,8 +15,47 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = $request->get('per_page', 10);
-        $products = Product::orderBy('name', 'asc')->paginate($perPage);
+        $query = Product::query();
+
+        // Filter by price range
+        if ($request->has('min_price')) {
+            $query->where('price', '>=', $request->min_price);
+        }
+        if ($request->has('max_price')) {
+            $query->where('price', '<=', $request->max_price);
+        }
+
+        // Filter by sex
+        if ($request->has('sex')) {
+            $query->whereIn('sex', [$request->sex , "U"]);
+        }
+
+        // Filter by category (and eager-load category only if needed)
+        if ($request->has('category_id')) {
+    $query->whereHas('categories', function($q) use ($request) {
+        $q->where('categories.id', $request->category_id);
+    })->with('categories');
+}
+
+
+        // Filter by color (from variants)
+        if ($request->has('color')) {
+            $query->whereHas('variants', function($q) use ($request) {
+                $q->where('color', $request->color);
+            })->with('variants'); // only eager-load if color filter applied
+        }
+
+        // Filter by size (from variants/sizes table)
+        if ($request->has('size')) {
+    $query->whereHas('variants', function($q) use ($request) {
+        $q->whereHas('size', function($q2) use ($request) {
+            $q2->where('size', $request->size);
+        });
+    })->with(['variants.size']); // eager-load sizes if needed
+}
+
+        $perPage = $request->get('per_page', 9);
+        $products = $query->orderBy('name', 'asc')->paginate($perPage);
 
         return response()->json([
             'message' => 'Products retrieved successfully',
