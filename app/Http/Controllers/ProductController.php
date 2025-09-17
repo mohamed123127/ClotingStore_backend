@@ -100,9 +100,18 @@ class ProductController extends Controller
     public function getGenders(){
         $genders = Product::select('sex as name', DB::raw('COUNT(*) as count'))
                     ->groupBy('sex')
-                    ->orderByRaw("FIELD(sex, 'B', 'G', 'U')")
+                    ->orderByRaw("FIELD(sex, 'M', 'F', 'U')")
                     ->get();
 
+        $uCount = $genders->firstWhere('name', 'U')?->count ?? 0;
+
+        // add U count to M and F
+        $genders = $genders->map(function ($item) use ($uCount) {
+            if ($item->name === 'M' || $item->name === 'F') {
+                $item->count += $uCount;
+            }
+            return $item;
+        });
 
         return response()->json([
             'message' => "genders fetched successfully",

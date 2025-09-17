@@ -35,9 +35,19 @@ public function index(){
 public function store(SaleRequest $request)
 {
     $data = $request->all();
+    // return response()->json([
+        //     "field" => $botFiled
+        // ]);
+    if(isset($data["customer"]["website"])){
+        $botFiled = $data["customer"]["website"];
+        if ($botFiled !== null) {
+            return response()->json(['message' => 'Bot detected'], 403);
+        }
+    }
     try {
         return DB::transaction(function () use ($data) {
             $sale = "";
+            $tracking = "1";
             $soldItems = $data["soldItems"];
             $customerData = $data["customer"];
             $shippingDetaillies = $data["shippingDetaillies"];
@@ -52,27 +62,27 @@ public function store(SaleRequest $request)
             // $salesUnits->saveCustomerTargetSize($customerId);
 
             //create parcel in shipping company
-            $YalidineResponse = YalidineServices::createParcel($customerData,$shippingDetaillies,$soldItems);
-            if($YalidineResponse['status'] != "success"){
-                return response()->json([
-                "message" => $YalidineResponse["message"],
-                "response" => $YalidineResponse["response"],
-                "processedData" => $YalidineResponse["processedData"]
-        ], 400);
-            }
-            $parcel = $YalidineResponse["data"];
+        //     $YalidineResponse = YalidineServices::createParcel($customerData,$shippingDetaillies,$soldItems);
+        //     if($YalidineResponse['status'] != "success"){
+        //         return response()->json([
+        //         "message" => $YalidineResponse["message"],
+        //         "response" => $YalidineResponse["response"],
+        //         "processedData" => $YalidineResponse["processedData"]
+        // ], 400);
+        //     }
+        //     $parcel = $YalidineResponse["data"];
 
             // save sale
-            $sale = $salesUnits->saveSale($parcel['tracking'],$customerId,$parcel['label'],$shippingDetaillies);
+            $sale = $salesUnits->saveSale($tracking,$customerId,"",$shippingDetaillies);
 
             // save sale Detaillies
-            $salesUnits->saveSaleDetaillies($parcel['tracking'],$soldItems);
+            $salesUnits->saveSaleDetaillies($tracking,$soldItems);
 
             return response()->json([
                 "status" => "success",
                 "message" => "sale added successfully",
-                "saleId" => $parcel["tracking"],
-                "label" => $parcel["label"]
+                "saleId" => $tracking,
+                "label" => $tracking
             ],201);
         });
     } catch (Exception $e) {

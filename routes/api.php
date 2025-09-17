@@ -11,6 +11,7 @@ use App\Http\Controllers\VariantController;
 use App\Http\Controllers\WilayaController;
 use App\Http\Controllers\Yalidine;
 use App\Http\Controllers\YalidineController;
+use App\Http\Middleware\YalidineApiRateLimitMiddleware;
 use App\Models\Categorie;
 use App\Models\Product;
 use App\Models\ProductImages;
@@ -27,9 +28,9 @@ use Illuminate\Support\Facades\Route;
 
 
 //Products API Routes
-Route::apiResource('products', ProductController::class);
-Route::get('products/MaxAndMinPrice',[ProductController::class,'getMaxAndMinPrice']);
 Route::get('products/genders',[ProductController::class,'getGenders']);
+Route::get('products/MaxAndMinPrice',[ProductController::class,'getMaxAndMinPrice']);
+Route::apiResource('products', ProductController::class);
 
 Route::prefix('products/{productId}/')->group(function () {
     //Images API Routes
@@ -65,11 +66,11 @@ Route::prefix('yalidine/')->group(function(){
     Route::get("communes/{wilaya_id}",[YalidineController::class,'GetCommunes']);
     Route::get("communes/{wilaya_id}/hasAgence",[YalidineController::class,'GetCommunes_hasAgences']);
     Route::get("agences/{commune_id}",[YalidineController::class,'GetAgences']);
-});
+})->middleware(YalidineApiRateLimitMiddleware::class);
 
 Route::apiResource("sales",SaleController::class)->only(['index','store']);
 
-Route::post('test',function (Request $request){
+Route::post('testAddProduct',function (Request $request){
     $data = $request->all();
     $product = Product::find($data["id"]);
     $productId = $product->id;
@@ -105,3 +106,9 @@ Route::post('test',function (Request $request){
         "data" => $sizesId
     ]);
 });
+
+Route::get('/test',function(){
+    return response()->json([
+        "message" => "true"
+    ]);
+})->middleware(YalidineApiRateLimitMiddleware::class);

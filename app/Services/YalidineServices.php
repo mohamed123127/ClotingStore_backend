@@ -13,8 +13,8 @@ class YalidineServices{
     public static function fetchWilayasAndStoreInDb(){
         try{
             $response = Http::withoutVerifying()->withHeaders([
-                    'X-API-ID' => '67123532299108446759',
-                    'X-API-TOKEN' => 't4x6NuMcUgbvsTk2z7k1fOzojocmXYF5LCKa8V0DWUDWKEQagry1NstEvRl9epVd'
+                    'X-API-ID' => env('X_API_ID'),
+                    'X-API-TOKEN' => env('X_API_TOKEN')
                 ])->get('https://api.yalidine.app/v1/wilayas');
 
                 if ($response->successful()) {
@@ -31,7 +31,7 @@ class YalidineServices{
                     }
                     return ["status"=>true];
                 }
-                return ["status" => false,"message" => "Failled to fetch data from api","error" => $response->json()->body()];
+                return ["status" => false,"message" => "Failled to fetch data from api","error" => $response->json()];
         }catch(Exception $e){
             return ["status" => false,"message" => "an exception occurred","error" => $e->getMessage()];;
         }
@@ -45,8 +45,8 @@ class YalidineServices{
 
             do {
     $response = Http::withoutVerifying()->withHeaders( [
-        'X-API-ID' => '67123532299108446759',
-        'X-API-TOKEN' => 't4x6NuMcUgbvsTk2z7k1fOzojocmXYF5LCKa8V0DWUDWKEQagry1NstEvRl9epVd'
+        'X-API-ID' => env('X_API_ID'),
+        'X-API-TOKEN' => env('X_API_TOKEN')
     ])->get($url);
 
     $data = $response->json();
@@ -94,8 +94,8 @@ if ($response->successful()) {
 
             do {
     $response = Http::withoutVerifying()->withHeaders( [
-        'X-API-ID' => '67123532299108446759',
-        'X-API-TOKEN' => 't4x6NuMcUgbvsTk2z7k1fOzojocmXYF5LCKa8V0DWUDWKEQagry1NstEvRl9epVd'
+        'X-API-ID' => env('X_API_ID'),
+        'X-API-TOKEN' => env('X_API_TOKEN')
     ])->get($url);
 
     $data = $response->json();
@@ -146,8 +146,8 @@ if ($response->successful()) {
                 Log::info("Fetching shipping prices for wilaya id: ".$wilayaId);
                 $urlToFetch = $url . $wilayaId;
     $response = Http::withoutVerifying()->withHeaders( [
-        'X-API-ID' => '67123532299108446759',
-        'X-API-TOKEN' => 't4x6NuMcUgbvsTk2z7k1fOzojocmXYF5LCKa8V0DWUDWKEQagry1NstEvRl9epVd'
+        'X-API-ID' => env('X_API_ID'),
+        'X-API-TOKEN' => env('X_API_TOKEN')
     ])->get($urlToFetch);
 
     $data = $response->json();
@@ -228,8 +228,8 @@ return ["status"=>true];
                 $processedData[0]["stopDesk_id"] = $shippingDetaillies["stopDeskId"];
             }
     $response = Http::withoutVerifying()->withHeaders( [
-        'X-API-ID' => '67123532299108446759',
-        'X-API-TOKEN' => 't4x6NuMcUgbvsTk2z7k1fOzojocmXYF5LCKa8V0DWUDWKEQagry1NstEvRl9epVd',
+        'X-API-ID' => env('X_API_ID'),
+        'X-API-TOKEN' => env('X_API_TOKEN'),
         "Content-Type" => "application/json"
     ])->post("https://api.yalidine.app/v1/parcels",$processedData);
 
