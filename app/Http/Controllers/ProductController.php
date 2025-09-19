@@ -7,7 +7,10 @@ use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Variant;
+use Exception;
+use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\Request;
+use Illuminate\Log\Logger;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Type\Integer;
 
@@ -15,12 +18,14 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
+        try{
         $query = Product::query();
 
         // Filter by price range
         if ($request->has('min_price')) {
             $query->where('price', '>=', $request->min_price);
         }
+
         if ($request->has('max_price')) {
             $query->where('price', '<=', $request->max_price);
         }
@@ -80,6 +85,12 @@ class ProductController extends Controller
             'last_page'      => $products->lastPage(),
             'products' => ProductResource::collection($products)
         ], 200);
+    }catch(Exception $e){
+        return response()->json([
+            "message" => "error when getting product",
+            "error" => $e->getMessage()
+        ]);
+    }
     }
 
     public function store(ProductRequest $request)
