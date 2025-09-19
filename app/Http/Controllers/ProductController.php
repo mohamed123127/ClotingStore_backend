@@ -15,8 +15,62 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = $request->get('per_page', 10);
-        $products = Product::orderBy('name', 'asc')->paginate($perPage);
+        $query = Product::query();
+
+        // Filter by price range
+        if ($request->has('min_price')) {
+            $query->where('price', '>=', $request->min_price);
+        }
+        if ($request->has('max_price')) {
+            $query->where('price', '<=', $request->max_price);
+        }
+
+        // Filter by sex
+        if ($request->has('sex')) {
+            $sexes = explode(',', $request->sex);
+            $sexes[] = 'U';
+
+            $query->whereIn('sex', $sexes);
+        }
+
+        // Filter by category (and eager-load category only if needed)
+        if ($request->has('category_id')) {
+    $categories = explode(',', $request->category_id);
+
+    foreach ($categories as $catId) {
+        $query->whereHas('categories', function($q) use ($catId) {
+            $q->where('categories.id', $catId);
+        });
+    }
+}
+
+
+
+        // Filter by color (from variants)
+       if ($request->has('color')) {
+        $colors = explode(',', $request->color);
+
+        $query->whereHas('variants', function($q) use ($colors) {
+        $q->where(function($q2) use ($colors) {
+            foreach ($colors as $color) {
+                $q2->orWhere('color', 'like', '%' . trim($color) . '%');
+            }
+        });
+    });
+}
+        // Filter by size (from variants/sizes table)
+        if ($request->has('size')) {
+            $sizes = explode(',', $request->size);
+
+            $query->whereHas('variants', function($q) use ($sizes) {
+            $q->whereHas('size', function($q2) use ($sizes) {
+                $q2->whereIn('size', $sizes);
+            });
+    });
+}
+
+        $perPage = $request->get('per_page', 9);
+        $products = $query->orderBy('name', 'asc')->paginate($perPage);
 
         return response()->json([
             'message' => 'Products retrieved successfully',
