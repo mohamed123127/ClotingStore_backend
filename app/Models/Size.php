@@ -14,8 +14,8 @@ class Size extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function productMeasurements(){
-        return $this->belongsToMany(ProductMeasurement::class);
+    public function measurements(){
+        return $this->hasMany(ProductMeasurement::class);
     }
 
     public function variants(){

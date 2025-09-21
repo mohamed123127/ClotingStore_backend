@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('measurement_types', function (Blueprint $table) {
             $table->id();
-            $table->string('part'); // "Pants", "Shirt"
             $table->string('name'); // "Height", "Basin", "Chest"
         });
     }

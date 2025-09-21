@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SizesRequest;
+use App\Http\Resources\SizeResource;
 use App\Models\ProductSizes;
 use App\Models\Size;
 use Illuminate\Http\Request;
@@ -23,15 +24,15 @@ class SizesController extends Controller
     public function index($productId)
     {
         // Fetch sizes for the given product ID
-        $sizes = Size::where('product_id', $productId)->get();
+        $sizes = Size::where('product_id', $productId)->with('measurements')->get();
 
         if($sizes->isEmpty()) {
             return response()->json(['message' => 'No sizes found for this product id'], 404);
         }
 
         return response()->json([
-            'message' => 'Sizes retrieved successfully',
-            'sizes' => $sizes
+            'message' => 'Sizes retrieved successfullyddd',
+            'sizes' => SizeResource::collection($sizes)
         ], 200);
     }
 

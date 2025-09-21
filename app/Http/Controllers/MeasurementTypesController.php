@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MeasurementTypes;
+use App\Models\ProductMeasurement;
 use Illuminate\Http\Request;
 
 class MeasurementTypesController extends Controller
@@ -10,9 +11,13 @@ class MeasurementTypesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($sizeId)
     {
-        //
+        $measurements = ProductMeasurement::where('size_id',$sizeId);
+        return response()->json([
+            "message" => "Mesurement retrived succseffuly",
+            "mesurements" => $measurements
+        ]);
     }
 
     /**
@@ -34,32 +39,5 @@ class MeasurementTypesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(MeasurementTypes $measurementTypes)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(MeasurementTypes $measurementTypes)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, MeasurementTypes $measurementTypes)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(MeasurementTypes $measurementTypes)
-    {
-        //
-    }
 }

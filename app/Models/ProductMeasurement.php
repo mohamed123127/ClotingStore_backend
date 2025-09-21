@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class ProductMeasurement extends Model
 {
     public function product(){
-        $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class);
     }
 
     public function size(){
-        $this->has(Size::class);
+        return $this->belongsTo(Size::class);
     }
 
     public function measurementType(){
-        $this->has(MeasurementType::class);
+        return $this->belongsTo(MeasurementType::class);
     }
 }

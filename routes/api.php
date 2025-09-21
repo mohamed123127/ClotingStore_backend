@@ -22,10 +22,6 @@ use App\Services\YalidineServices;
 use Cloudinary\Tag\Sizes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-/*Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');*/
-
 
 //Products API Routes
 Route::get('products/genders',[ProductController::class,'getGenders']);
