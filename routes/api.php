@@ -21,6 +21,7 @@ use App\Services\Yalidine\wilayaServices;
 use App\Services\YalidineServices;
 use Cloudinary\Tag\Sizes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 //Products API Routes
@@ -105,9 +106,14 @@ Route::post('testAddProduct',function (Request $request){
 
 Route::get('/test',function(){
       try {
-        app('sentry')->captureMessage('Test log message from production!');
 
-        throw new \Exception("Test exception for Sentry");
+// Log to all channels in the stack (including Sentry)
+Log::info('This is an info message');
+Log::warning('User {id} failed to login.', ['id' => 1]);
+Log::error('This is an error message');
+
+// Log directly to the Sentry channel
+Log::channel('sentry_logs')->error('This will only go to Sentry');
     } catch (\Exception $e) {
         // إرسال الاستثناء إلى Sentry
         app('sentry')->captureException($e);
