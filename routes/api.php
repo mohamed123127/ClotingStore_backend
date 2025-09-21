@@ -104,7 +104,13 @@ Route::post('testAddProduct',function (Request $request){
 });
 
 Route::get('/test',function(){
-    return response()->json([
-        "message" => "true"
-    ]);
-})->middleware(YalidineApiRateLimitMiddleware::class);
+      try {
+        app('sentry')->captureMessage('Test log message from production!');
+
+        throw new \Exception("Test exception for Sentry");
+    } catch (\Exception $e) {
+        // إرسال الاستثناء إلى Sentry
+        app('sentry')->captureException($e);
+        return "Sentry test exception sent!";
+    }
+});
