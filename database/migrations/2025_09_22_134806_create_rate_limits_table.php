@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sale_detailles', function (Blueprint $table) {
+        Schema::create('rate_limits', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('variant_id');
-            $table->decimal('selling_price');
-            $table->integer('quantity');
-            $table->foreignId('sale_id')->constrained()->onDelete('cascade');
+        $table->string('key')->unique();   // المفتاح (api:sec, api:min,...)
+        $table->unsignedInteger('count')->default(0);
+        $table->timestamp('expires_at');   // وقت انتهاء الصلاحية
+        $table->timestamps();
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sale_detailles');
+        Schema::dropIfExists('rate_limits');
     }
 };

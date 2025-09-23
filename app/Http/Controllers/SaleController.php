@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CustomerRequest;
 use App\Http\Requests\SaleRequest;
 use App\Http\Resources\SaleResource;
+use App\Jobs\CreateParcelJob;
+use App\Jobs\YalidineDispatcherJob;
 use App\Models\Sale;
 use App\Models\Variant;
 use App\Services\SalesFunctionServices;
@@ -38,16 +40,14 @@ public function store(SaleRequest $request)
     // return response()->json([
         //     "field" => $botFiled
         // ]);
-    if(isset($data["customer"]["website"])){
-        $botFiled = $data["customer"]["website"];
-        if ($botFiled !== null) {
-            return response()->json(['message' => 'Bot detected'], 403);
-        }
-    }
+    // if(isset($data["customer"]["website"])){
+    //     $botFiled = $data["customer"]["website"];
+    //     if ($botFiled !== null) {
+    //         return response()->json(['message' => 'Bot detected'], 403);
+    //     }
+    // }
     try {
         return DB::transaction(function () use ($data) {
-            $sale = "";
-            $tracking = "1";
             $soldItems = $data["soldItems"];
             $customerData = $data["customer"];
             $shippingDetaillies = $data["shippingDetaillies"];
@@ -58,31 +58,29 @@ public function store(SaleRequest $request)
             // save customer
             $customerId = $salesUnits->saveCustomer($customerData);
 
-            // save customer targe size
+            // // save customer targe size
             // $salesUnits->saveCustomerTargetSize($customerId);
 
-            //create parcel in shipping company
-        //     $YalidineResponse = YalidineServices::createParcel($customerData,$shippingDetaillies,$soldItems);
-        //     if($YalidineResponse['status'] != "success"){
-        //         return response()->json([
-        //         "message" => $YalidineResponse["message"],
-        //         "response" => $YalidineResponse["response"],
-        //         "processedData" => $YalidineResponse["processedData"]
-        // ], 400);
-        //     }
-        //     $parcel = $YalidineResponse["data"];
-
             // save sale
-            $sale = $salesUnits->saveSale($tracking,$customerId,"",$shippingDetaillies);
+            $saleId = $salesUnits->saveSale($customerId,$shippingDetaillies);
 
             // save sale Detaillies
-            $salesUnits->saveSaleDetaillies($tracking,$soldItems);
+            $salesUnits->saveSaleDetaillies($saleId,$soldItems);
 
+           // create parcel in shipping company with worker
+           if(env('APP_ENV') == "production"){
+           YalidineDispatcherJob::dispatch(CreateParcelJob::class,[
+                "saleId" => $saleId,
+                "customerData" => $customerData,
+                "shippingDetaillies" => $shippingDetaillies,
+                "soldItems" => $soldItems
+           ])->onQueue('yalidine_dispatcher');
+           }else{
+            echo("not added to yalidine we are in development");
+           }
             return response()->json([
                 "status" => "success",
-                "message" => "sale added successfully",
-                "saleId" => $tracking,
-                "label" => $tracking
+                "message" => "sale added successfully"
             ],201);
         });
     } catch (Exception $e) {

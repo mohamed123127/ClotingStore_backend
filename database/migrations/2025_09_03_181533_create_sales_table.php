@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sales', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->id();
+            $table->string('tracking');
             $table->string('status');
             $table->string('wilaya');
             $table->string('commune');

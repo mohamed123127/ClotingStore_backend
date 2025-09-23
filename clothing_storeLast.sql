@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 19, 2025 at 09:53 PM
+-- Generation Time: Sep 22, 2025 at 12:00 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.4.6
 
@@ -217,16 +217,6 @@ CREATE TABLE `cache` (
   `value` mediumtext NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `cache`
---
-
-INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('laravel-cache-api_requests_day', 'i:53;', 1758191388),
-('laravel-cache-api_requests_hour', 'i:53;', 1758108588),
-('laravel-cache-api_requests_minute', 'i:3;', 1758106632),
-('laravel-cache-api_requests_queue', 'a:0:{}', 1758110215);
 
 -- --------------------------------------------------------
 
@@ -1891,7 +1881,12 @@ INSERT INTO `customers` (`id`, `lastName`, `firstName`, `email`, `password`, `ph
 (10, 'عمار', 'باي', '', '', '0670930077', 1, '2025-09-13 19:21:52', '2025-09-13 19:21:52'),
 (11, 'الشيخو', 'مصطفى', '', '', '0658856783', 1, '2025-09-13 19:24:56', '2025-09-13 19:24:56'),
 (12, 'ain naadja', 'ain naadja', '', '', '0770230943', 1, '2025-09-13 19:28:53', '2025-09-13 19:28:53'),
-(13, 'khalouch', 'jalil', '', '', '0558789654', 1, '2025-09-17 10:26:12', '2025-09-17 10:26:12');
+(13, 'khalouch', 'jalil', '', '', '0558789654', 1, '2025-09-17 10:26:12', '2025-09-17 10:26:12'),
+(15, 'test', 'test', '', '', '0776786543', 1, '2025-09-21 09:22:57', '2025-09-21 09:22:57'),
+(16, 'test', 'test', '', '', '0677654324', 1, '2025-09-21 09:26:45', '2025-09-21 09:26:45'),
+(17, 'فثسف', 'فسيف', '', '', '0765678645', 1, '2025-09-21 09:48:15', '2025-09-21 09:48:15'),
+(19, 'louahchi', 'louahchi', '', '', '0778765434', 1, '2025-09-21 09:49:43', '2025-09-21 09:49:43'),
+(21, 'louka', 'test', '', '', '0667543456', 1, '2025-09-21 09:51:37', '2025-09-21 09:51:37');
 
 -- --------------------------------------------------------
 
@@ -1964,9 +1959,17 @@ CREATE TABLE `job_batches` (
 
 CREATE TABLE `measurement_types` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `part` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `measurement_types`
+--
+
+INSERT INTO `measurement_types` (`id`, `name`) VALUES
+(1, 'Shirt'),
+(2, 'Sleeve'),
+(3, 'Pants');
 
 -- --------------------------------------------------------
 
@@ -1992,8 +1995,6 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (5, '2025_08_14_103147_create_products_table', 1),
 (6, '2025_08_14_104530_create_sizes_table', 1),
 (7, '2025_08_14_104557_create_variants_table', 1),
-(8, '2025_08_14_113200_create_measurement_types_table', 1),
-(9, '2025_08_14_120554_create_product_measurement_table', 1),
 (10, '2025_08_17_101515_create_product_images_table', 1),
 (11, '2025_08_28_195216_create_categories_table', 1),
 (12, '2025_08_28_201822_create_category_product_table', 1),
@@ -2004,7 +2005,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (17, '2025_09_03_181456_create_customers_table', 1),
 (18, '2025_09_03_181515_create_customer_target_sizes_table', 1),
 (20, '2025_09_03_181653_create_sale_detailles_table', 1),
-(21, '2025_09_03_181533_create_sales_table', 2);
+(21, '2025_09_03_181533_create_sales_table', 2),
+(22, '2025_08_14_113200_create_measurement_types_table', 3),
+(23, '2025_08_14_120554_create_product_measurement_table', 3);
 
 -- --------------------------------------------------------
 
@@ -2153,16 +2156,36 @@ INSERT INTO `product_images` (`id`, `image_url`, `product_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_measurement`
+-- Table structure for table `product_measurements`
 --
 
-CREATE TABLE `product_measurement` (
+CREATE TABLE `product_measurements` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `measurement_type_id` bigint(20) UNSIGNED NOT NULL,
   `size_id` bigint(20) UNSIGNED NOT NULL,
-  `value` varchar(255) NOT NULL,
-  `product_id` bigint(20) UNSIGNED NOT NULL
+  `value` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `product_measurements`
+--
+
+INSERT INTO `product_measurements` (`id`, `measurement_type_id`, `size_id`, `value`) VALUES
+(1, 1, 1, '33'),
+(2, 2, 1, '26'),
+(3, 3, 1, '45'),
+(4, 1, 2, '37'),
+(5, 2, 2, '28.5'),
+(6, 3, 2, '50.5'),
+(7, 1, 3, '37'),
+(8, 2, 3, '29'),
+(9, 3, 3, '47.5'),
+(10, 1, 4, '39.5'),
+(11, 2, 4, '32'),
+(12, 3, 4, '55'),
+(13, 1, 5, '41'),
+(14, 2, 5, '33'),
+(15, 3, 5, '56');
 
 -- --------------------------------------------------------
 
@@ -2188,7 +2211,7 @@ CREATE TABLE `sales` (
 --
 
 INSERT INTO `sales` (`id`, `status`, `wilaya`, `commune`, `agence_or_address`, `shipping_price`, `shipping_label`, `customer_id`, `created_at`, `updated_at`) VALUES
-('1', 'En préparation', 'Adrar', 'Adrar', 'Agence de Adrar Yalidine', '900', '', 13, '2025-09-17 10:33:38', '2025-09-17 10:33:38'),
+('1', 'En préparation', 'Aïn Témouchent', 'Beni Saf', 'Agence de Beni Saf Guepex', '500', '', 21, '2025-09-21 09:51:37', '2025-09-21 09:51:37'),
 ('yal-B27TLM', 'Livré', 'Boumerdès', 'Hammedi', '', '650', 'https://yalidine.app/app/bordereau.php?tracking=yal-B27TLM&token=K0FsNWhSV2QrNGZaVGpuWjlzZngyZz09', 4, '2025-09-11 13:51:33', '2025-09-11 13:51:33'),
 ('yal-B33BZK', 'Livré', 'Sétif', 'El Eulma', 'Desk El Eulma Yalidine', '500', '', 10, '2025-09-01 19:21:52', '2025-09-02 19:21:52'),
 ('yal-C42XNV', 'Livré', 'Batna', 'Barika', '', '500', 'https://yalidine.app/app/bordereau.php?tracking=yal-C42XNV&token=ZmVGSEFKYUcydzRtTTlYdlVQYUwrZz09', 2, '2025-09-11 13:31:42', '2025-09-11 13:31:42'),
@@ -2236,8 +2259,7 @@ INSERT INTO `sale_detailles` (`id`, `variant_id`, `selling_price`, `quantity`, `
 (13, 108, 3500.00, 1, 'yal-B33BZK'),
 (14, 83, 4450.00, 1, 'yal-R20PTK'),
 (15, 141, 4400.00, 1, 'yal-S53DEH'),
-(24, 1, 3800.00, 0, '1'),
-(25, 29, 4200.00, 0, '1');
+(30, 6, 4900.00, 1, '1');
 
 -- --------------------------------------------------------
 
@@ -2262,6 +2284,7 @@ INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, 
 ('c8r59oyhU0jV0KnitcCTLaEdy2nGcZqYnpHyZi1O', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiY1NSYTN1TUxWeERXbjJySGFlQk9MVTEyODV4S3NxMDVVcmJBNjRQdSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1758055545),
 ('COBwOH9BwRKRVpiUwMYOUTDdMgEaVxQo0qaEia4x', NULL, '107.189.1.21', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiak1KOXBZS2N5VFh2b3pZUDVQNURhN1cyYnQySEk2dnNrY3BsdHp1ciI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjA6Imh0dHBzOi8vNjIuNzIuMzYuMjUwIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1757770850),
 ('eh799RAGmRiCGGGantbzulhuqOOGNYAAvW7ZCTuf', NULL, '162.216.150.23', 'Hello from Palo Alto Networks, find out more about our scans in https://docs-cortex.paloaltonetworks.com/r/1/Cortex-Xpanse/Scanning-activity', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiQUM2YW9zSmdiVlEwQjVvSXNKU09XaUJHajdUMWVZOU5NUWhjbGxiMiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjA6Imh0dHBzOi8vNjIuNzIuMzYuMjUwIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1757756979),
+('MSjqS1hHaktiDNcXnAUWPEdpGzSJIUlhNlNsh7yc', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoickR0anJ3TzhBN1ZPcFRLNUxJTDlyRXlka3FXdXZISjhDWU5adFVBUSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kZWJ1Zy1zZW50cnkiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1758474627),
 ('mTQBUv0dFE4jUookmodwLzDxOclpeFOcobCwX10w', NULL, '172.234.162.31', '', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoidXJZemU1eGZxRmE0RDk5OHdMQVFxcm1ZblNXZHJwOE51ODhWb0dPVyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjk6Imh0dHBzOi8vc3J2NjgxODgyLmhzdGdyLmNsb3VkIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1757766685),
 ('o3WLjYZmdHTAhBNZSpwVisNeq0ucxV4XoI7pY3no', NULL, '172.234.162.31', '', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiQnFramxQelhUTlZlMUxiZVlDNU5mUkN1Vm00Y3JRVjF3dHFMVkZxMSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjk6Imh0dHBzOi8vYXBpLmphcmRpbi1lbmZhbnQuY29tIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1757766685),
 ('pJo4WnSKzIKc93NUQGTgstqPiQRdT4nDZg929LBt', NULL, '172.234.162.31', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:115.5.0) Gecko/20100101 Firefox/115.5.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiSGdKeWdIT2xjcThYMFlxTkUzUUpISlVxZ1ZKVENQaTFtbldhZmlaQiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjk6Imh0dHBzOi8vc3J2NjgxODgyLmhzdGdyLmNsb3VkIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1757766665),
@@ -2494,8 +2517,8 @@ INSERT INTO `variants` (`id`, `color`, `size_id`, `quantity`, `product_id`) VALU
 (3, 'Brown', 3, 1, 19),
 (4, 'Brown', 4, 1, 19),
 (5, 'Brown', 5, 1, 19),
-(6, 'Purple', 6, 1, 11),
-(7, 'Purple', 7, 1, 11),
+(6, 'Purple', 6, 0, 11),
+(7, 'Purple', 7, 0, 11),
 (8, 'Purple', 8, 0, 11),
 (9, 'Purple', 9, 1, 11),
 (10, 'Purple', 10, 1, 11),
@@ -2514,7 +2537,7 @@ INSERT INTO `variants` (`id`, `color`, `size_id`, `quantity`, `product_id`) VALU
 (23, 'Brown', 18, 1, 21),
 (24, 'Brown', 19, 1, 21),
 (25, 'Brown', 20, 1, 21),
-(26, 'Blue', 21, 1, 14),
+(26, 'Blue', 21, 0, 14),
 (27, 'Blue', 22, 1, 14),
 (28, 'Blue', 23, 1, 14),
 (29, 'Blue', 24, 1, 14),
@@ -2559,8 +2582,8 @@ INSERT INTO `variants` (`id`, `color`, `size_id`, `quantity`, `product_id`) VALU
 (94, 'Blue', 57, 2, 12),
 (95, 'Blue', 58, 2, 12),
 (96, 'Blue', 59, 2, 12),
-(97, 'White', 60, 1, 16),
-(98, 'White', 61, 1, 16),
+(97, 'White', 60, 0, 16),
+(98, 'White', 61, 0, 16),
 (99, 'White', 62, 0, 16),
 (100, 'White', 63, 1, 16),
 (101, 'White', 64, 1, 16),
@@ -2898,13 +2921,12 @@ ALTER TABLE `product_images`
   ADD KEY `product_images_product_id_foreign` (`product_id`);
 
 --
--- Indexes for table `product_measurement`
+-- Indexes for table `product_measurements`
 --
-ALTER TABLE `product_measurement`
+ALTER TABLE `product_measurements`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product_measurement_measurement_type_id_foreign` (`measurement_type_id`),
-  ADD KEY `product_measurement_size_id_foreign` (`size_id`),
-  ADD KEY `product_measurement_product_id_foreign` (`product_id`);
+  ADD KEY `product_measurement_size_id_foreign` (`size_id`);
 
 --
 -- Indexes for table `sales`
@@ -2987,7 +3009,7 @@ ALTER TABLE `category_product`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `customer_target_sizes`
@@ -3011,13 +3033,13 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `measurement_types`
 --
 ALTER TABLE `measurement_types`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -3038,16 +3060,16 @@ ALTER TABLE `product_images`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
--- AUTO_INCREMENT for table `product_measurement`
+-- AUTO_INCREMENT for table `product_measurements`
 --
-ALTER TABLE `product_measurement`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `product_measurements`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `sale_detailles`
 --
 ALTER TABLE `sale_detailles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `sizes`
@@ -3091,11 +3113,10 @@ ALTER TABLE `product_images`
   ADD CONSTRAINT `product_images_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `product_measurement`
+-- Constraints for table `product_measurements`
 --
-ALTER TABLE `product_measurement`
+ALTER TABLE `product_measurements`
   ADD CONSTRAINT `product_measurement_measurement_type_id_foreign` FOREIGN KEY (`measurement_type_id`) REFERENCES `measurement_types` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `product_measurement_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `product_measurement_size_id_foreign` FOREIGN KEY (`size_id`) REFERENCES `sizes` (`id`) ON DELETE CASCADE;
 
 --

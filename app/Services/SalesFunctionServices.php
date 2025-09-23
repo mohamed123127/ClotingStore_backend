@@ -55,7 +55,7 @@ public function saveCustomerTargetSize($customerId,$sizes){
         ];
     }
 
-    public function saveSale($tracking,$customerId,$shippingLabel,$shippingDetaillies){
+    public function saveSale($customerId,$shippingDetaillies){
         $agence_or_address = "";
         $shippingPrice = 0;
         if($shippingDetaillies['shippingMethod'] == "stopDesk"){
@@ -73,17 +73,17 @@ public function saveCustomerTargetSize($customerId,$sizes){
         }
 
         $sale = Sale::create([
-            "id" => $tracking,
-            "status" => "En préparation",
+            "tracking" => "",
+            "status" => "En Attend de preparation",
             "wilaya" => $shippingDetaillies['wilaya'],
             "commune" => $shippingDetaillies['commune'],
             "agence_or_address" => $agence_or_address,
             "shipping_price" => $shippingPrice,
-            "shipping_label" => $shippingLabel,
+            "shipping_label" => "",
             "customer_id" => $customerId
         ]);
 
-        return $sale;
+        return $sale->id;
     }
 
     public function saveSaleDetaillies($saleId,$soldItems){

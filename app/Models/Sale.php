@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sale extends Model
 {
-    protected $fillable = ['id','status','wilaya','commune','agence_or_address','shipping_price','shipping_label','customer_id'];
-    public $incrementing = false;
-    protected $keyType = 'string';
+    protected $fillable = ['id','tracking','status','wilaya','commune','agence_or_address','shipping_price','shipping_label','customer_id'];
 
     public function saledItems(){
         return $this->hasMany(SaleDetaille::class);

@@ -114,7 +114,7 @@ Log::error('This is an error message');
 
 // Log directly to the Sentry channel
 Log::channel('sentry_logs')->error('This will only go to Sentry');
-return "test";
+return "test from vps";
     } catch (\Exception $e) {
         // إرسال الاستثناء إلى Sentry
         app('sentry')->captureException($e);
