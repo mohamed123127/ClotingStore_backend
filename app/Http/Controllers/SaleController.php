@@ -6,6 +6,7 @@ use App\Http\Requests\CustomerRequest;
 use App\Http\Requests\SaleRequest;
 use App\Http\Resources\SaleResource;
 use App\Jobs\CreateParcelJob;
+use App\Jobs\TestYalidineJob;
 use App\Jobs\YalidineDispatcherJob;
 use App\Models\Sale;
 use App\Models\Variant;
@@ -76,7 +77,8 @@ public function store(SaleRequest $request)
                 "soldItems" => $soldItems
            ])->onQueue('yalidine_dispatcher');
            }else{
-            echo("not added to yalidine we are in development");
+                // echo("not added to yalidine we are in development");
+            //    YalidineDispatcherJob::dispatch(TestYalidineJob::class,[]);
            }
             return response()->json([
                 "status" => "success",

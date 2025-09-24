@@ -38,7 +38,6 @@ class YalidineDispatcherJob implements ShouldQueue
         if ($this->canSendRequest()) {
             dispatch_sync(new $this->jobClass($this->payload));
         } else {
-            echo("he can't send \n");
             // أعده إلى أول الطابور (LPUSH)
             $this->release(30);
         }
@@ -46,7 +45,6 @@ class YalidineDispatcherJob implements ShouldQueue
 
        private function canSendRequest(): bool
     {
-        echo("can send request");
         $limits = [
             ['key' => 'api:sec',  'max' => 5,    'ttl' => 1],
             ['key' => 'api:min',  'max' => 50,   'ttl' => 60],
@@ -55,7 +53,6 @@ class YalidineDispatcherJob implements ShouldQueue
         ];
 
         foreach ($limits as $limit) {
-            echo("1111111");
             $count = RateLimit::incrementLimit($limit['key'], $limit['ttl']);
             if ($count > $limit['max']) {
                 return false;

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class RateLimit extends Model
 {
@@ -19,9 +20,11 @@ class RateLimit extends Model
 
     public static function incrementLimit(string $key, int $ttl): int
     {
-        $record = static::firstOrNew(['key' => $key]);
+        return DB::transaction(function () use ($key, $ttl) {
+        $record = RateLimit::where('key', $key)->lockForUpdate()->first();
 
-        if (!$record->exists || $record->expired()) {
+        if (!$record || $record->expired()) {
+            $record = $record ?: new RateLimit(['key' => $key]);
             $record->count = 0;
             $record->expires_at = now()->addSeconds($ttl);
         }
@@ -30,5 +33,6 @@ class RateLimit extends Model
         $record->save();
 
         return $record->count;
+    });
     }
 }
