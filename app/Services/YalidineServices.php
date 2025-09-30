@@ -228,8 +228,8 @@ return ["status"=>true];
                 $processedData[0]["stopDesk_id"] = $shippingDetaillies["stopDeskId"];
             }
     $response = Http::withoutVerifying()->withHeaders( [
-        'X-API-ID' => env('X_API_ID'),
-        'X-API-TOKEN' => env('X_API_TOKEN'),
+        'X-API-ID' => config('services.x_api.id'),
+        'X-API-TOKEN' => config('services.x_api.token'),
         "Content-Type" => "application/json"
     ])->post("https://api.yalidine.app/v1/parcels",$processedData);
 

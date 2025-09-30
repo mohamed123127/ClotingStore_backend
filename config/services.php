@@ -37,5 +37,9 @@ return [
     'cloudinary' => [
     'url' => env('CLOUDINARY_URL'),
 ],
+'x_api' => [
+        'id' => env('X_API_ID'),
+        'token' => env('X_API_TOKEN'),
+    ],
 
 ];

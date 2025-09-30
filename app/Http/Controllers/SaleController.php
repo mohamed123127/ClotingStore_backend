@@ -69,7 +69,7 @@ public function store(SaleRequest $request)
             $salesUnits->saveSaleDetaillies($saleId,$soldItems);
 
            // create parcel in shipping company with worker
-           if(env('APP_ENV') == "production"){
+           if(config('app.env') == "production"){
            YalidineDispatcherJob::dispatch(CreateParcelJob::class,[
                 "saleId" => $saleId,
                 "customerData" => $customerData,
