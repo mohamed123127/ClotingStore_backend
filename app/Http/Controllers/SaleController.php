@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Log;
 class SaleController extends Controller
 {
 public function index(){
-$sales = Sale::where('status', '=', 'Livré')
+$sales = Sale::where('status', '!=', 'Livré')
     ->orWhereDate('updated_at', Carbon::today())
     ->orderBy('updated_at', 'asc')->get();
     // return response()->json($sales);
