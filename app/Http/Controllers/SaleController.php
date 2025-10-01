@@ -12,6 +12,7 @@ use App\Models\Sale;
 use App\Models\Variant;
 use App\Services\SalesFunctionServices;
 use App\Services\YalidineServices;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -21,16 +22,13 @@ use Illuminate\Support\Facades\Log;
 class SaleController extends Controller
 {
 public function index(){
-    $sales = Sale::orderBy('updated_at', 'asc')->paginate(20);
-
+$sales = Sale::where('status', '=', 'Livré')
+    ->orWhereDate('updated_at', Carbon::today())
+    ->orderBy('updated_at', 'asc')->get();
     // return response()->json($sales);
 
     return response()->json([
         "message" => "sales returned successfully",
-        'total_sales' => $sales->total(), // total count in DB
-        'current_page'   => $sales->currentPage(),
-        'sales_per_page' => $sales->perPage(),
-        'last_page'  => $sales->lastPage(),
         "sales" => SaleResource::collection($sales)
     ]);
 }
